@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f0f8;
+    color: #333;
+    margin: 0;
+}
+
+header {
+    text-align: center;
+    padding: 1rem;
+    background: #6a1b9a;
+    color: white;
+}
+
+.controls {
+    margin-top: 0.5rem;
+}
+
+.controls input,
+.controls select {
+    margin: 0.3rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: none;
+}
+
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.carousel::-webkit-scrollbar {
+    height: 8px;
+}
+
+.carousel::-webkit-scrollbar-thumb {
+    background: #6a1b9a;
+    border-radius: 4px;
+}
+
+.spell-card {
+    min-width: 220px;
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.spell-card:hover {
+    transform: translateY(-5px);
+}
+
+.pager {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background: #6a1b9a;
+    color: white;
+    cursor: pointer;
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+#status {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
