@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🪄⚡⚯ ͛Wizarding Spells⚯⚯ ͛⚡🪄</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>🪄⚡⚯ ͛Wizarding Spells ⚯ ͛⚡🪄</h1>
+        <div class="controls">
+            <input type="text" id="search" placeholder="Search spells...">
+            <select id="typeFilter"></select>
+            <select id="pageSize">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+            </select>
+        </div>
+    </header>
+
+    <main>
+        <div id="spellList" class="carousel"></div>
+        <div class="pager">
+            <button id="prevBtn">⬅ Prev</button>
+            <span id="pageIndicator"></span>
+            <button id="nextBtn">Next ➡</button>
+        </div>
+        <p id="status"></p>
+    </main>
+
+    <script type="module" src="./js/script.js"></script>
+</body>
+
+</html>
