@@ -1,15 +1,3 @@
-(async function getinitialData() {
-    try {
-        let res = await res.json();
-        displayDropDown(res.data);
-    } catch (err {
-        console.error(`❌ ${err.message}`);
-    }
-
-})();
-
-const gallery = document.getElementById("gallery");
-
 
 function $(sel, root = document) {
     return root.querySelector(sel);
