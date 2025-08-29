@@ -1,4 +1,7 @@
 
+fetchSpells();
+
+
 function $(sel, root = document) {
     return root.querySelector(sel);
 }
@@ -39,44 +42,44 @@ function renderSpells(spells) {
     `;
         list.appendChild(card);
     });
-function renderSpells(spells) {
-    const list = $('#spellList');
-    list.innerHTML = '';
+    function renderSpells(spells) {
+        const list = $('#spellList');
+        list.innerHTML = '';
 
-    if (!spells || spells.length === 0) {
-        list.innerHTML = '<p>No spells found.</p>';
-        return;
-    }
+        if (!spells || spells.length === 0) {
+            list.innerHTML = '<p>No spells found.</p>';
+            return;
+        }
 
-    // Map spell types to Hogwarts houses
-    function getHouseClass(type) {
-        if (!type) return "gryffindor"; // fallback
-        type = type.toLowerCase();
+        // Map spell types to Hogwarts houses
+        function getHouseClass(type) {
+            if (!type) return "gryffindor"; // fallback
+            type = type.toLowerCase();
 
-        if (type.includes("curse") || type.includes("dark")) return "slytherin";
-        if (type.includes("charm")) return "ravenclaw";
-        if (type.includes("healing") || type.includes("counter")) return "hufflepuff";
-        if (type.includes("defense") || type.includes("dueling")) return "gryffindor";
+            if (type.includes("curse") || type.includes("dark")) return "slytherin";
+            if (type.includes("charm")) return "ravenclaw";
+            if (type.includes("healing") || type.includes("counter")) return "hufflepuff";
+            if (type.includes("defense") || type.includes("dueling")) return "gryffindor";
 
-        // default
-        return "gryffindor";
-    }
+            // default
+            return "gryffindor";
+        }
 
-    spells.forEach(spell => {
-        const card = document.createElement('div');
-        card.className = 'spell-card';
+        spells.forEach(spell => {
+            const card = document.createElement('div');
+            card.className = 'spell-card';
 
-        const houseClass = getHouseClass(spell.type);
+            const houseClass = getHouseClass(spell.type);
 
-        card.innerHTML = `
+            card.innerHTML = `
             <h3 class="spell-title ${houseClass}">${spell.name}</h3>
             <p>${spell.incantation || ''}</p>
             <p><em>${spell.type}</em></p>
             <p>${spell.effect}</p>
         `;
-        list.appendChild(card);
-    });
-}
+            list.appendChild(card);
+        });
+    }
 
 
     // Run after spells are loaded
@@ -205,11 +208,11 @@ init();
 
 // ✨ Wand sparkle trail
 document.addEventListener('mousemove', e => {
-  const sparkle = document.createElement('div');
-  sparkle.className = 'wand-sparkle';
-  sparkle.style.left = e.pageX + 'px';
-  sparkle.style.top = e.pageY + 'px';
-  document.body.appendChild(sparkle);
+    const sparkle = document.createElement('div');
+    sparkle.className = 'wand-sparkle';
+    sparkle.style.left = e.pageX + 'px';
+    sparkle.style.top = e.pageY + 'px';
+    document.body.appendChild(sparkle);
 
-  setTimeout(() => sparkle.remove(), 600); // auto-clean
+    setTimeout(() => sparkle.remove(), 600); // auto-clean
 });
