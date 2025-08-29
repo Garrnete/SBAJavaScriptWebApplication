@@ -214,3 +214,18 @@ button:disabled {
         opacity: 0;
     }
 }
+
+.custom-alert {
+    position: fixed;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    background: #fef5c3;
+    padding: 16px 24px;
+    border: 2px solid #c6a85f;
+    border-radius: 8px;
+    font-family: 'Cinzel Decorative', serif;
+    color: #333;
+    z-index: 10000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}

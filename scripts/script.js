@@ -12,7 +12,7 @@ async function fetchSpells() {
 
 fetchSpells();
 
-
+// -------------------- Helper Functions --------------------
 function $(sel, root = document) {
     return root.querySelector(sel);
 }
@@ -21,6 +21,67 @@ function setStatus(msg) {
     $('#status').textContent = msg || '';
 }
 
+function getHouseClass(type) {
+    if (!type) return "gryffindor";
+    type = type.toLowerCase();
+    if (type.includes("curse") || type.includes("dark")) return "slytherin";
+    if (type.includes("charm")) return "ravenclaw";
+    if (type.includes("healing") || type.includes("counter")) return "hufflepuff";
+    if (type.includes("defense") || type.includes("dueling")) return "gryffindor";
+    return "gryffindor";
+}
+
+// -------------------- Spell Cast Animation --------------------
+function castSpellAnimation(card) {
+    const rect = card.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    for (let i = 0; i < 20; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'wand-sparkle';
+        sparkle.style.left = centerX + 'px';
+        sparkle.style.top = centerY + 'px';
+        sparkle.style.width = sparkle.style.height = Math.random() * 6 + 4 + 'px';
+        sparkle.style.background = `radial-gradient(circle, #fff 0%, #${Math.floor(Math.random() * 16777215).toString(16)} 50%)`;
+
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = 50 + Math.random() * 30;
+        const xOffset = Math.cos(angle) * distance;
+        const yOffset = Math.sin(angle) * distance;
+
+        sparkle.animate([
+            { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+            { transform: `translate(${xOffset}px, ${yOffset}px) scale(0.5)`, opacity: 0 }
+        ], {
+            duration: 600 + Math.random() * 200,
+            easing: 'ease-out',
+            fill: 'forwards'
+        });
+
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 800);
+    }
+}
+
+// -------------------- Custom Alert --------------------
+function customAlert(message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'custom-alert';
+    alertDiv.textContent = message;
+    document.body.appendChild(alertDiv);
+
+    alertDiv.animate([
+        { opacity: 0, transform: 'translateY(-10px)' },
+        { opacity: 1, transform: 'translateY(0)' },
+        { opacity: 1, transform: 'translateY(0)' },
+        { opacity: 0, transform: 'translateY(-10px)' }
+    ], { duration: 2500, easing: 'ease-out' });
+
+    setTimeout(() => alertDiv.remove(), 2500);
+}
+
+// -------------------- Render Spells --------------------
 function renderSpells(spells) {
     const list = $('#spellList');
     list.innerHTML = '';
@@ -30,84 +91,31 @@ function renderSpells(spells) {
         return;
     }
 
-    // Highlight Curse spells
-    function highlightCurses() {
-        document.querySelectorAll(".spell-card h3").forEach(h3 => {
-            if (h3.textContent.toLowerCase().includes("curse")) {
-                h3.classList.add("curse");
-            }
-        });
-    }
-
     spells.forEach(spell => {
         const card = document.createElement('div');
         card.className = 'spell-card';
 
+        const houseClass = getHouseClass(spell.type);
         const isCurse = spell.name.toLowerCase().includes("curse");
 
         card.innerHTML = `
-        <h3 class="${isCurse ? 'curse' : ''}">${spell.name}</h3>
-        <p>${spell.incantation || ''}</p>
-        <p><em>${spell.type}</em></p>
-        <p>${spell.effect}</p>
-    `;
-        list.appendChild(card);
-    });
-    function renderSpells(spells) {
-        const list = $('#spellList');
-        list.innerHTML = '';
-
-        if (!spells || spells.length === 0) {
-            list.innerHTML = '<p>No spells found.</p>';
-            return;
-        }
-
-        // Map spell types to Hogwarts houses
-        function getHouseClass(type) {
-            if (!type) return "gryffindor"; // fallback
-            type = type.toLowerCase();
-
-            if (type.includes("curse") || type.includes("dark")) return "slytherin";
-            if (type.includes("charm")) return "ravenclaw";
-            if (type.includes("healing") || type.includes("counter")) return "hufflepuff";
-            if (type.includes("defense") || type.includes("dueling")) return "gryffindor";
-
-            // default
-            return "gryffindor";
-        }
-
-        spells.forEach(spell => {
-            const card = document.createElement('div');
-            card.className = 'spell-card';
-
-            const houseClass = getHouseClass(spell.type);
-
-            card.innerHTML = `
-            <h3 class="spell-title ${houseClass}">${spell.name}</h3>
+            <h3 class="spell-title ${houseClass} ${isCurse ? 'curse' : ''}">${spell.name}</h3>
             <p>${spell.incantation || ''}</p>
             <p><em>${spell.type}</em></p>
             <p>${spell.effect}</p>
         `;
-            list.appendChild(card);
+
+        // Click: sparkle + custom alert
+        card.addEventListener('click', () => {
+            castSpellAnimation(card);
+            customAlert(`✨ Spell Cast! ✨\nName: ${spell.name}\nType: ${spell.type}\nEffect: ${spell.effect}`);
         });
-    }
 
-
-    // Run after spells are loaded
-    document.addEventListener("DOMContentLoaded", highlightCurses);
-
-    spells.forEach(spell => {
-        const card = document.createElement('div');
-        card.className = 'spell-card';
-        card.innerHTML = `
-            <h3>${spell.name}</h3>
-            <p><strong>Type:</strong> ${spell.type || 'Unknown'}</p>
-            <p>${spell.effect || ''}</p>
-        `;
         list.appendChild(card);
     });
 }
 
+// -------------------- Pagination & Filters --------------------
 function updatePager({ page, canPrev, canNext }) {
     $('#pageIndicator').textContent = `Page ${page}`;
     $('#prevBtn').disabled = !canPrev;
@@ -125,16 +133,16 @@ function populateTypes(types) {
     });
 }
 
-// ---------- Main Script ----------
+// -------------------- Main Script --------------------
 let spells = [];
 let filtered = [];
 let page = 1;
 let pageSize = 10;
 
-// Mock data
 async function fetchSpells() {
     setStatus('Loading spells...');
     try {
+        // Mock data
         spells = [
             { name: 'Expelliarmus', type: 'Charm', effect: 'Disarms opponent' },
             { name: 'Lumos', type: 'Charm', effect: 'Lights wand tip' },
@@ -158,7 +166,7 @@ async function fetchSpells() {
     }
 }
 
-// Pagination
+// -------------------- Pagination --------------------
 function renderPage() {
     const start = (page - 1) * pageSize;
     const end = start + pageSize;
@@ -172,7 +180,7 @@ function renderPage() {
     });
 }
 
-// Event listeners
+// -------------------- Event Handlers --------------------
 function setupEvents() {
     $('#search').addEventListener('input', e => {
         const term = e.target.value.toLowerCase();
@@ -209,7 +217,7 @@ function setupEvents() {
     });
 }
 
-// Initialize
+// -------------------- Initialize --------------------
 function init() {
     fetchSpells();
     setupEvents();
@@ -217,7 +225,7 @@ function init() {
 
 init();
 
-// ✨ Wand sparkle trail
+// -------------------- Wand Sparkle Effect --------------------
 document.addEventListener('mousemove', e => {
     const sparkle = document.createElement('div');
     sparkle.className = 'wand-sparkle';
@@ -225,5 +233,5 @@ document.addEventListener('mousemove', e => {
     sparkle.style.top = e.pageY + 'px';
     document.body.appendChild(sparkle);
 
-    setTimeout(() => sparkle.remove(), 600); // auto-clean
+    setTimeout(() => sparkle.remove(), 600);
 });
