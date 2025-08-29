@@ -10,8 +10,18 @@ body {
     font-family: 'Cinzel Decorative', 'Segoe UI Symbol', 'Arial Unicode MS', sans-serif;
     background: url('https://media1.tenor.com/m/1upz1tTRuxgAAAAd/hp-harry-potter.gif') center center fixed;
     background-size: cover;
-    color: #222; /* default darker text */
+    color: #222;
+    /* default darker text */
     min-height: 100%;
+    cursor: none;
+    /* hide default cursor */
+}
+
+#emoji-cursor {
+    position: fixed;
+    pointer-events: none;
+    font-size: 32px;
+    z-index: 9999;
 }
 
 *::before,
@@ -28,7 +38,8 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(10, 5, 20, 0.4); /* lighter so gif shows more */
+    background: rgba(10, 5, 20, 0.4);
+    /* lighter so gif shows more */
     z-index: -1;
 }
 
@@ -39,7 +50,8 @@ header {
     color: goldenrod;
     font-size: 2rem;
     letter-spacing: 2px;
-    text-shadow: 2px 2px 6px #161208; /* glow for magic effect */
+    text-shadow: 2px 2px 6px #161208;
+    /* glow for magic effect */
 }
 
 /* Make "curse" keyword green + black */
@@ -77,7 +89,8 @@ header {
 
 /* Parchment container */
 .parchment {
-    background: rgba(253, 245, 230, 0.75); /* lighter parchment */
+    background: rgba(253, 245, 230, 0.05);
+    /* lighter parchment */
     border: 4px solid #c6c0ba;
     border-radius: 12px;
     padding: 2rem;
@@ -156,26 +169,48 @@ button:disabled {
 /* Special style for "Curse" spells */
 .curse {
     color: black !important;
-    text-shadow: 1px 1px 6px #008000 !important; /* glowing green */
+    text-shadow: 1px 1px 6px #008000 !important;
+    /* glowing green */
 }
 
 /* Hogwarts House Colors for Spell Titles */
 .spell-title.gryffindor {
-    color: #ae0001; /* Gryffindor red */
+    color: #ae0001;
+    /* Gryffindor red */
     text-shadow: 1px 1px 6px #ffcccb;
 }
 
 .spell-title.slytherin {
-    color: #1a472a; /* Slytherin green */
+    color: #1a472a;
+    /* Slytherin green */
     text-shadow: 1px 1px 6px #2ecc71;
 }
 
 .spell-title.ravenclaw {
-    color: #0e1a40; /* Ravenclaw blue */
+    color: #0e1a40;
+    /* Ravenclaw blue */
     text-shadow: 1px 1px 6px #5dade2;
 }
 
 .spell-title.hufflepuff {
-    color: #ffdb00; /* Hufflepuff gold */
+    color: #ffdb00;
+    /* Hufflepuff gold */
     text-shadow: 1px 1px 6px #fff176;
+}
+
+.wand-sparkle {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff 0%, rgba(24, 18, 2, 0.588) 50%);
+    pointer-events: none;
+    animation: fade 0.6s forwards;
+}
+
+@keyframes fade {
+    to {
+        transform: scale(2);
+        opacity: 0;
+    }
 }

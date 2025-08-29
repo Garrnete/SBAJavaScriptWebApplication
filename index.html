@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🪄⚡⚯ ͛ Wizarding Spells ⚯ ͛⚡🪄</title>
     <link rel="stylesheet" href="styles/style.css">
+    <script type="module" src="./scripts/app.js"></script>
     <script defer src="./scripts/script.js"></script>
 </head>
 
@@ -33,6 +34,14 @@
             <span id="pageIndicator">Page 1</span>
             <button id="nextBtn">Next ➡</button>
         </div>
+        <div id="emoji-cursor">🪄</div>
+        <script>
+            const cursor = document.getElementById("emoji-cursor");
+            document.addEventListener("mousemove", e => {
+                cursor.style.left = e.pageX + "px";
+                cursor.style.top = e.pageY + "px";
+            });
+        </script>
     </main>
 </body>
 
