@@ -1,3 +1,14 @@
+// app.js
+async function fetchSpells() {
+    try {
+        const res = await axios.get('https://hp-api.onrender.com/api/spells');
+        const data = res.data;
+        console.log("Fetched spells:", data);
+        // Do more with `data` here...
+    } catch (err) {
+        console.error("Error fetching spells:", err);
+    }
+}
 
 fetchSpells();
 
