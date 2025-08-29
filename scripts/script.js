@@ -16,6 +16,72 @@ function renderSpells(spells) {
         return;
     }
 
+    // Highlight Curse spells
+    function highlightCurses() {
+        document.querySelectorAll(".spell-card h3").forEach(h3 => {
+            if (h3.textContent.toLowerCase().includes("curse")) {
+                h3.classList.add("curse");
+            }
+        });
+    }
+
+    spells.forEach(spell => {
+        const card = document.createElement('div');
+        card.className = 'spell-card';
+
+        const isCurse = spell.name.toLowerCase().includes("curse");
+
+        card.innerHTML = `
+        <h3 class="${isCurse ? 'curse' : ''}">${spell.name}</h3>
+        <p>${spell.incantation || ''}</p>
+        <p><em>${spell.type}</em></p>
+        <p>${spell.effect}</p>
+    `;
+        list.appendChild(card);
+    });
+function renderSpells(spells) {
+    const list = $('#spellList');
+    list.innerHTML = '';
+
+    if (!spells || spells.length === 0) {
+        list.innerHTML = '<p>No spells found.</p>';
+        return;
+    }
+
+    // Map spell types to Hogwarts houses
+    function getHouseClass(type) {
+        if (!type) return "gryffindor"; // fallback
+        type = type.toLowerCase();
+
+        if (type.includes("curse") || type.includes("dark")) return "slytherin";
+        if (type.includes("charm")) return "ravenclaw";
+        if (type.includes("healing") || type.includes("counter")) return "hufflepuff";
+        if (type.includes("defense") || type.includes("dueling")) return "gryffindor";
+
+        // default
+        return "gryffindor";
+    }
+
+    spells.forEach(spell => {
+        const card = document.createElement('div');
+        card.className = 'spell-card';
+
+        const houseClass = getHouseClass(spell.type);
+
+        card.innerHTML = `
+            <h3 class="spell-title ${houseClass}">${spell.name}</h3>
+            <p>${spell.incantation || ''}</p>
+            <p><em>${spell.type}</em></p>
+            <p>${spell.effect}</p>
+        `;
+        list.appendChild(card);
+    });
+}
+
+
+    // Run after spells are loaded
+    document.addEventListener("DOMContentLoaded", highlightCurses);
+
     spells.forEach(spell => {
         const card = document.createElement('div');
         card.className = 'spell-card';

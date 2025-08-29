@@ -10,7 +10,7 @@ body {
     font-family: 'Cinzel Decorative', 'Segoe UI Symbol', 'Arial Unicode MS', sans-serif;
     background: url('https://media1.tenor.com/m/1upz1tTRuxgAAAAd/hp-harry-potter.gif') center center fixed;
     background-size: cover;
-    color: #685510;
+    color: #222; /* default darker text */
     min-height: 100%;
 }
 
@@ -20,7 +20,7 @@ body {
     box-sizing: inherit;
 }
 
-/* Dark semi-transparent overlay to make text readable */
+/* Dark semi-transparent overlay to improve readability */
 body::before {
     content: "";
     position: fixed;
@@ -28,7 +28,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(10, 5, 20, 0.6);
+    background: rgba(10, 5, 20, 0.4); /* lighter so gif shows more */
     z-index: -1;
 }
 
@@ -36,15 +36,32 @@ header {
     text-align: center;
     padding: 0rem;
     background: transparent;
-    color: #fcd928b6;
-    text-shadow: 2px 2px 6px black;
+    color: goldenrod;
     font-size: 2rem;
     letter-spacing: 2px;
+    text-shadow: 2px 2px 6px #161208; /* glow for magic effect */
 }
 
+/* Make "curse" keyword green + black */
+.spell-card h3 {
+    margin-top: 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.spell-card h3:contains("Curse") {
+    color: black;
+    text-shadow: 1px 1px 6px #008000;
+}
+
+/* Controls */
 .controls {
     margin-top: 0.5rem;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .controls input,
@@ -52,99 +69,23 @@ header {
     margin: 0.3rem;
     padding: 0.5rem 1rem;
     border-radius: 6px;
-    border: 2px solid #f5d742;
-    background: rgba(20, 10, 30, 0.8);
-    color: #f5d742;
+    border: 2px solid #3a3a3a;
+    background: rgba(255, 255, 255, 0.8);
+    color: #111;
     font-family: inherit;
 }
 
-#spellList {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
-}
-
-.spell-card {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid #f5d742;
-    border-radius: 10px;
-    padding: 1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s, box-shadow 0.3s;
-    color: #f5f2e7;
-}
-
-.spell-card:hover {
-    transform: translateY(-6px) scale(1.03);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.spell-card h3 {
-    color: #f5d742;
-    margin-top: 0;
-    font-size: 1.3rem;
-    text-shadow: 1px 1px 4px black;
-}
-
-.pager {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-}
-
-button {
-    padding: 0.6rem 1.2rem;
-    border: none;
-    border-radius: 6px;
-    background: #f5d742;
-    color: #2a1a40;
-    cursor: pointer;
-    font-weight: bold;
-    font-family: inherit;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-    transition: background 0.3s, transform 0.2s;
-}
-
-button:hover:not(:disabled) {
-    background: #ffe066;
-    transform: scale(1.05);
-}
-
-button:disabled {
-    background: #555;
-    color: #aaa;
-    cursor: not-allowed;
-}
-
-#status {
-    text-align: center;
-    margin-bottom: 1rem;
-    font-style: italic;
-    color: #f5d742;
-    text-shadow: 1px 1px 4px black;
-}
-
-/* Parchment background for main container */
+/* Parchment container */
 .parchment {
-    background: #fdf5e6;
-    /* parchment color */
+    background: rgba(253, 245, 230, 0.75); /* lighter parchment */
     border: 4px solid #c6c0ba;
     border-radius: 12px;
     padding: 2rem;
     max-width: 700px;
     margin: 2rem auto;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
     background-size: cover;
-}
-
-/* Center everything nicely */
-.container {
-    text-align: center;
 }
 
 /* Spell list grid */
@@ -158,7 +99,7 @@ button:disabled {
 
 /* Spell cards styled like old book notes */
 .spell-card {
-    background: #fffbe8;
+    background: rgba(255, 251, 232, 0.9);
     border: 2px solid #a67c52;
     border-radius: 8px;
     padding: 1rem;
@@ -174,33 +115,7 @@ button:disabled {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
-.spell-card h3 {
-    color: #5a3825;
-    margin: 0 0 0.5rem;
-    font-size: 1.4rem;
-    text-decoration: underline;
-}
-
-/* Controls stay centered */
-.controls {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1rem;
-}
-
-.controls input,
-.controls select {
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    border: 2px solid #5a3825;
-    background: #fffbe8;
-    color: #333;
-    font-family: inherit;
-}
-
-/* Pager stays clean */
+/* Pager */
 .pager {
     display: flex;
     justify-content: center;
@@ -213,7 +128,7 @@ button {
     padding: 0.6rem 1.2rem;
     border: none;
     border-radius: 6px;
-    background: #5a3825;
+    background: #3a3a3a;
     color: #fdf5e6;
     cursor: pointer;
     font-weight: bold;
@@ -222,7 +137,7 @@ button {
 }
 
 button:hover:not(:disabled) {
-    background: #7b5030;
+    background: #008000;
     transform: scale(1.05);
 }
 
@@ -235,5 +150,32 @@ button:disabled {
     text-align: center;
     margin-bottom: 1rem;
     font-style: italic;
-    color: #5a3825;
+    color: #333;
+}
+
+/* Special style for "Curse" spells */
+.curse {
+    color: black !important;
+    text-shadow: 1px 1px 6px #008000 !important; /* glowing green */
+}
+
+/* Hogwarts House Colors for Spell Titles */
+.spell-title.gryffindor {
+    color: #ae0001; /* Gryffindor red */
+    text-shadow: 1px 1px 6px #ffcccb;
+}
+
+.spell-title.slytherin {
+    color: #1a472a; /* Slytherin green */
+    text-shadow: 1px 1px 6px #2ecc71;
+}
+
+.spell-title.ravenclaw {
+    color: #0e1a40; /* Ravenclaw blue */
+    text-shadow: 1px 1px 6px #5dade2;
+}
+
+.spell-title.hufflepuff {
+    color: #ffdb00; /* Hufflepuff gold */
+    text-shadow: 1px 1px 6px #fff176;
 }
